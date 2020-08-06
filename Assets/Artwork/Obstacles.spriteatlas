@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Obstacles
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 0
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 2048
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: 4
+      m_TextureCompression: 1
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: 94e2bb46eb716a54e965f48e49c676e8, type: 3}
+    totalSpriteSurfaceArea: 6716
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 5523df41cadb78f46bf88b45213c7957, type: 3}
+  - {fileID: 21300000, guid: 5085f183368ad0b438242d00474d0591, type: 3}
+  - {fileID: 21300000, guid: 56749995c8be9694dbf520812f74ea31, type: 3}
+  - {fileID: 21300000, guid: f539d60602bd340479df47735b1d5016, type: 3}
+  - {fileID: 21300000, guid: 8da80366306759648905eebc79adeb73, type: 3}
+  - {fileID: 21300000, guid: eed2e7863575aae44aa79a336e4620d8, type: 3}
+  - {fileID: 21300000, guid: a7090a589c5afff42a8eb699c28115c4, type: 3}
+  - {fileID: 21300000, guid: 45b36188622952f468d3d7cf84772139, type: 3}
+  - {fileID: 21300000, guid: d81239d96e7643f4faded7fe61381926, type: 3}
+  - {fileID: 21300000, guid: b8e6689c0f00f524c8b882a488d5bca9, type: 3}
+  - {fileID: 21300000, guid: bac5ee3e3ddb58541ad7050c16610042, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - desk-1
+  - couch
+  - dresser
+  - tv-2
+  - desk-3
+  - tv-0
+  - tv-1
+  - crate
+  - trash
+  - chair
+  - desk-2
+  m_Tag: Obstacles
+  m_IsVariant: 0
