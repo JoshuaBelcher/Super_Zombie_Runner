@@ -24,15 +24,15 @@ public class Spawner : MonoBehaviour
         StartCoroutine(EnemyGenerator());
 
         IEnumerator EnemyGenerator() {
-            // delays the execution of the co-routine
-            yield return new WaitForSeconds(delay);
+            // delays the execution of the co-routine by a random delay amount for each iteration of the function
+            // my best understanding is that when "yield return" is encountered, the expression of delay executes then returns control to the calling EnemyGenerator method
+            yield return new WaitForSeconds(delay); // yield keyword along with IEnumrator return type designate this function as iterable
 
             if (active) {
                 // stores reference to the game object's transform component
                 var newTransform = transform;
 
                 // creates an instance of a randomly selected prefab from the above array at the position of the game object
-                // this script is attached to (Quaternion.idenity is a zeroed rotation)
                 GameObjectUtil.Instantiate(prefabs[Random.Range(0, prefabs.Length)], newTransform.position);
                 ResetDelay(); // set new delay each time a new instantion happens
 
