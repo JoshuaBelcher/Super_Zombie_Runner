@@ -4,7 +4,8 @@ using UnityEngine;
 
 // a single utility class that can handle the functions of creating and destroying prefab instances
 public class GameObjectUtil {
-    // dictionary keyed to the type of recycled game object with a value representing the corresponding object pool
+    // dictionary keyed to the type of recycled game object with a value representing the corresponding object pool;
+    // useful for taking a reference we are already employing in our code, the RecycleGameObject, and using that to further reference associated information, which is the pool the RGO is located in
     private static Dictionary<RecycleGameObject, ObjectPool> pools = new Dictionary<RecycleGameObject, ObjectPool>();
 
     // pass in the type of game object we want to instantiate and the position it should appear
@@ -43,17 +44,18 @@ public class GameObjectUtil {
     }
 
     // returns an object pool from the pools dictionary based on the type of recycled game object referenced, assuming the dictionary contains it
-    private static ObjectPool GetObjectPool(RecycleGameObject reference) {
+    private static ObjectPool GetObjectPool(RecycleGameObject reference) {  // NOTE: the reference here is actually (ex.) "Ostacles (RecycleGameObject)" which is how the type of RGO is differentiated
         ObjectPool pool = null;
 
         if (pools.ContainsKey(reference)) {
+            // pool will store the value (an object pool) associated with the reference (recycle game object) key
             pool = pools[reference];
         } else {
             // if pool does not already exist in dictionary, we create a new one in a container and give it a name based on the game object type referenced
             var poolContainer = new GameObject(reference.gameObject.name + "ObjectPool");
             // adds ObjectPool script component to the new container
             pool = poolContainer.AddComponent<ObjectPool>();
-            // set pool prefab property to reference so that the pool knows what type of objects to create
+            // set pool prefab property to reference so that the pool identifies what type of objects to contain
             pool.prefab = reference;
             // add to pool dictionary
             pools.Add(reference, pool);

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    // an array containing all the types of prefabs our spawner script can create
+    // an array containing all the types of prefabs our spawner script can create (elements added in Unity inspector)
     public GameObject[] prefabs;
 
     // the delay time between each spawned game object

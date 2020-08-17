@@ -28,10 +28,11 @@ public class ObjectPool : MonoBehaviour
     public RecycleGameObject NextObject(Vector3 pos) {
         RecycleGameObject instance = null;
 
-        foreach (var go in poolInstances) {
+        foreach (var go in poolInstances) { //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ why does this cycle through every item instead of breaking out after first success?
             if(go.gameObject.activeSelf != true) {
                 instance = go;
                 instance.transform.position = pos;
+                // break here??? why do we need to cycle through each if we've already found a match?
             }
         }
 
