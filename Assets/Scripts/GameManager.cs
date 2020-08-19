@@ -1,11 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public GameObject playerPrefab;
+    // field to hold the text game object we will drag into here in the Unity inspector
+    public Text continueText;
 
+    private float blinkTime = 0f;
+    private bool blink;
     private bool gameStarted;
     private TimeManager timeManager;
     private GameObject player;
@@ -33,6 +38,8 @@ public class GameManager : MonoBehaviour
         spawner.active = false;
 
         Time.timeScale = 0;
+
+        continueText.text = "PRESS ANY BUTTON TO START";
     }
 
     // Update is called once per frame
@@ -44,6 +51,18 @@ public class GameManager : MonoBehaviour
                 timeManager.ManipulateTime(1, 1f);
                 ResetGame();
             }
+        }
+
+        // since time is stopped when game ends, we have to manually increment and switch blinking on/off to make the visual effect
+        if (!gameStarted) {
+            blinkTime++;
+
+            if(blinkTime % 40 == 0) {
+                blink = !blink;
+            }
+
+            // we access the canvas renderer component of the Text game object we drug in to actually make the text blink via controlling alpha (opacity)
+            continueText.canvasRenderer.SetAlpha(blink ? 0 : 1);
         }
     }
 
@@ -62,6 +81,9 @@ public class GameManager : MonoBehaviour
         // transition time to zero to stop the game gracefully
         timeManager.ManipulateTime(0, 5.5f);
         gameStarted = false;
+
+        // modify continue text for restart rather than first game
+        continueText.text = "PRESS ANY BUTTON TO RESTART";
     }
 
     void ResetGame() {
@@ -80,5 +102,9 @@ public class GameManager : MonoBehaviour
         playerDestroyScript.DestroyCallback += OnPlayerKilled;
 
         gameStarted = true;
+
+        // hides continue message text once game has started
+        continueText.canvasRenderer.SetAlpha(0);
+
     }
 }
