@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public GameObject playerPrefab;
 
+    private bool gameStarted;
     private TimeManager timeManager;
     private GameObject player;
     private GameObject floor;
@@ -31,13 +32,19 @@ public class GameManager : MonoBehaviour
 
         spawner.active = false;
 
-        ResetGame();
+        Time.timeScale = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        // checking to see if game has ended, then any keypress will restart the game
+        if (!gameStarted && Time.timeScale ==0) {
+            if(Input.anyKeyDown) {
+                timeManager.ManipulateTime(1, 1f);
+                ResetGame();
+            }
+        }
     }
 
     // event handler for player death (DestroyOffscreen) that matches signature of OnDestroy delegate
@@ -54,6 +61,7 @@ public class GameManager : MonoBehaviour
 
         // transition time to zero to stop the game gracefully
         timeManager.ManipulateTime(0, 5.5f);
+        gameStarted = false;
     }
 
     void ResetGame() {
@@ -61,7 +69,7 @@ public class GameManager : MonoBehaviour
         spawner.active = true;
 
         // have GameObjectUtil script instantiate a new prefab at designated position (in this case, Player prefab is assigned via the Unity Inspector)
-        player = GameObjectUtil.Instantiate(playerPrefab, new Vector3(0, (Screen.height / PixelPerfectCamera.pixelsToUnits) / 2, 0));
+        player = GameObjectUtil.Instantiate(playerPrefab, new Vector3(0, (Screen.height / PixelPerfectCamera.pixelsToUnits) / 2 + 100, 0));
 
         // NOTE from Murach C#: To handle an event from another class, you create an instance of the class that raises the event and assign it to a class variable.
         // Then, you declare an event handler with a signature that matches the delegate's signature. Finally, you wire the event handler to the event...
@@ -70,5 +78,7 @@ public class GameManager : MonoBehaviour
         var playerDestroyScript = player.GetComponent<DestroyOffscreen>();
         // add the OnPlayerKilled method from this Game Manager script to the DestroyCallback event in the DestroyOffscreen script
         playerDestroyScript.DestroyCallback += OnPlayerKilled;
+
+        gameStarted = true;
     }
 }

@@ -8,7 +8,7 @@ public class TimeManager : MonoBehaviour
     // allows us to set the game's time scale to a new value with a transitional rate effect between the old and new time scale
    public void ManipulateTime(float newTime, float duration) {
         // we do not want the time scale to be complete zero since we may have loops or other objects that still need to execute correctly in the game
-        // this selection statement is a failsafe to correct any argument entry of 0
+        // this selection statement is a failsafe
         if (Time.timeScale == 0)
             Time.timeScale = 0.1f;
 
