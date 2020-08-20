@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     private GameObject player;
     private GameObject floor;
     private Spawner spawner;
+    private bool beatBestTime;
 
     private void Awake() {
         // locate (by name) and return the game objects for the floor and spawner (return the actual attached script component for spawner) and time manager
@@ -45,6 +46,9 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0;
 
         continueText.text = "PRESS ANY BUTTON TO START";
+
+        // retrieve the player's best score from Unity's storage
+        bestTime = PlayerPrefs.GetFloat("BestTime");
     }
 
     // Update is called once per frame
@@ -69,8 +73,11 @@ public class GameManager : MonoBehaviour
             // we access the canvas renderer component of the Text game object we drug in to actually make the text blink via controlling alpha (opacity)
             continueText.canvasRenderer.SetAlpha(blink ? 0 : 1);
 
+            //  best score text color is applied below depending on whether a new best score was just achieved
+            var textColor = beatBestTime ? "#FF0" : "#FFF";
+
             // update the text displayed in the score UI when game is ended
-            scoreText.text = "TIME: " + FormatTime(timeElapsed) + "\nBEST: " + FormatTime(bestTime);
+            scoreText.text = "TIME: " + FormatTime(timeElapsed) + "\n<color=" + textColor + ">BEST: " + FormatTime(bestTime) + "</color>";
         } else {
             // increment the time then update the text displayed in the score UI while game is being played
             timeElapsed += Time.deltaTime;
@@ -96,6 +103,13 @@ public class GameManager : MonoBehaviour
 
         // modify continue text for restart rather than first game
         continueText.text = "PRESS ANY BUTTON TO RESTART";
+
+        // check to see if the player's new time at death is better than their best time, if so, update best time in Unity's storage to save new best score
+        if (timeElapsed > bestTime) {
+            bestTime = timeElapsed;
+            PlayerPrefs.SetFloat("BestTime", bestTime);
+            beatBestTime = true;
+        }
     }
 
     void ResetGame() {
@@ -120,6 +134,8 @@ public class GameManager : MonoBehaviour
 
         // reset the game timer "score"
         timeElapsed = 0;
+
+        beatBestTime = false;
 
     }
 
