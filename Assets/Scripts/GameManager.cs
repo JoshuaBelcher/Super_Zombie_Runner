@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,7 +9,11 @@ public class GameManager : MonoBehaviour
     public GameObject playerPrefab;
     // field to hold the text game object we will drag into here in the Unity inspector
     public Text continueText;
+    // field to hold the text game object we will drag into here in the Unity inspector
+    public Text scoreText;
 
+    private float timeElapsed = 0f;
+    private float bestTime = 0f;
     private float blinkTime = 0f;
     private bool blink;
     private bool gameStarted;
@@ -63,6 +68,13 @@ public class GameManager : MonoBehaviour
 
             // we access the canvas renderer component of the Text game object we drug in to actually make the text blink via controlling alpha (opacity)
             continueText.canvasRenderer.SetAlpha(blink ? 0 : 1);
+
+            // update the text displayed in the score UI when game is ended
+            scoreText.text = "TIME: " + FormatTime(timeElapsed) + "\nBEST: " + FormatTime(bestTime);
+        } else {
+            // increment the time then update the text displayed in the score UI while game is being played
+            timeElapsed += Time.deltaTime;
+            scoreText.text = "TIME: " + FormatTime(timeElapsed);
         }
     }
 
@@ -106,5 +118,15 @@ public class GameManager : MonoBehaviour
         // hides continue message text once game has started
         continueText.canvasRenderer.SetAlpha(0);
 
+        // reset the game timer "score"
+        timeElapsed = 0;
+
+    }
+
+    // format the actual elapsed time into a format to be presented in the text of our score UI
+    string FormatTime(float value) {
+        TimeSpan t = TimeSpan.FromSeconds(value); // a span of time (broken into components based on unit of time) is created from the elapsed delta time
+
+        return string.Format("{0:D2}:{1:D2}", t.Minutes, t.Seconds); // a string is returned with the minutes and seconds components of the TimeSpan displayed in proper reading format
     }
 }
